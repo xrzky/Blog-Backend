@@ -14,9 +14,45 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Article.init({
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    image_url: DataTypes.TEXT
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Title cannot be omitted'
+        },
+        notEmpty: {
+          msg: 'Title cannot be an empty string'
+        }
+      }
+    },
+    description: {
+      type: DataTypes.TEXT('long'),
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Description cannot be omitted'
+        },
+        notEmpty: {
+          msg: 'Description cannot be an empty string'
+        }
+      }
+    },
+    image_url: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Image URL cannot be omitted'
+        },
+        notEmpty: {
+          msg: 'Image URL cannot be an empty string'
+        },
+        isUrl: {
+          msg: 'Wrong URL format'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Article',
