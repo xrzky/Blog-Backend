@@ -31,7 +31,7 @@ class articlesController {
                 createdAt: articles.createdAt,
                 updatedAt: articles.updatedAt
             }))
-            res.status(200).json({ articles: data})
+            res.status(200).json(data)
         } catch (error) {
             next(error);
         }
@@ -61,13 +61,14 @@ class articlesController {
         const data = { title, description, image_url };
         try {
             const [affectedRows, updatedArticles] = await Article.update(data, { where: { id }, returning: true });
+            if(affectedRows === 0 || !updatedArticles.length) throw ({ name: 'cantUpdateArticle' });
             const article = updatedArticles[0]
-            if(affectedRows === 0) throw ({ name: 'cantUpdateArticle' });
             if(!article) throw ({ name: 'SequelizeValidationError' });
             res.status(200).json({
                 id: article.id,
                 title: article.title,
                 description: article.description,
+                image_url: article.image_url,
                 createdAt: article.createdAt,
                 updatedAt: article.updatedAt
             })
