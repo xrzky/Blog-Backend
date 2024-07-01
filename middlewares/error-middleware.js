@@ -8,6 +8,10 @@ function errorMiddleware(error, req, res, next) {
             code: 401,
             message: 'Email or Password is Wrong'
         },
+        'EmailOrPasswordEmpty': {
+            code: 401,
+            message: 'Email or Password is Wrong'
+        },
         'WrongPassword': {
             code: 401,
             message: 'Email or Password is Wrong'
@@ -26,7 +30,7 @@ function errorMiddleware(error, req, res, next) {
         },
         'NoAuthorization': {
             code: 401,
-            message: 'Unauthorized'
+            message: 'No Authorization'
         },
         'Unauthorized': {
             code: 401,
@@ -36,14 +40,15 @@ function errorMiddleware(error, req, res, next) {
             code: 401,
             message: 'Invalid Token'
         },
+        'cantUpdateArticle': {
+            code: 404,
+            message: 'cannot update because data article not found'
+        },
         'InvalidToken': {
             code: 401,
             message: 'Invalid Token'
         },
-        'cantUpdateArticle': {
-            code: 404,
-            message: 'cannot update this Articles because body data is undefined'
-        }
+        
     }
 
     if (error.name === 'SequelizeValidationError') {

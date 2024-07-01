@@ -9,7 +9,7 @@ class UsersController {
             const user = await User.create({ fullname, email, password });
             res.status(201).json({
                 id: user.id,
-                name: user.fullname,
+                fullname: user.fullname,
                 email: user.email
             })
         } catch (error) {
@@ -20,6 +20,7 @@ class UsersController {
     static async signIn(req, res, next) {
         const { email, password } = req.body;
         try {
+            if (!email || !password) throw { name: 'EmailOrPasswordEmpty'}
             const user = await User.findOne({ where: { email } });
             if (!user) throw { name: 'EmailNotFound' };
             if(!compare(password, user.password)) throw { name: 'WrongPassword' };
